@@ -1,0 +1,8 @@
+<TextView
+    android:text = "Love You, Gemy!"			# Create New Text
+    android:textColor = "#4689C8"			# Color Of This Text
+    android:textSize = "30sp"				# Size Of THis Text
+    android:textStyle = "bold"				# Style Of This Text
+    android:background = "@android:color/black"		# BackGround For This Text
+    android:layout_width = "360dp"			# Width For This Text
+    android:layout_height = "wrap_content" />		# wrap_content >> The Same Size Of Text
