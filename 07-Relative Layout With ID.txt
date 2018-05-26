@@ -1,0 +1,96 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2196F3">
+
+    <TextView
+        android:id="@+id/Gemy_text_view"			#Get ID [+] For The First Time Write This ID
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:layout_centerHorizontal="true"			#To Make It In Center Of Horizontal
+        android:layout_centerVertical="true"			#To Make It In Center Of Vertical
+        android:textSize="24sp"
+        android:text="Gemy" />
+
+    <TextView
+        android:id="@+id/Mamo_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#F44336"        
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@id/Gemy_text_view"		#Call [Gemy's Id] & Don't Neet To Write [+] Cause It's Second Time To Make [Mamo's Text] Right Of [Gemy's Text]
+        android:textSize="24sp"
+        android:text="Mamo" />
+
+    <TextView
+        android:id="@+id/Badr_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#9C27B0"        
+        android:textSize="24sp"
+        android:text="Badr" />
+
+    <TextView
+        android:id="@+id/Hassan_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#3F51B5"        
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textSize="24sp"
+        android:text="Hassan" />
+
+    <TextView
+        android:id="@+id/Omar_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#673AB7"        
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/Hassan_text_view"
+        android:textSize="24sp"
+        android:text="Omar" />
+
+    <TextView
+        android:id="@+id/Ali_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#009688"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/Hassan_text_view"
+        android:textSize="24sp"
+        android:text="Ali" />
+
+    <TextView
+        android:id="@+id/Mohamed_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#536DFE"        
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:text="Mohamed" />
+
+    <TextView
+        android:id="@+id/Zizo_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#8BC34A"        
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/Mohamed_text_view"
+        android:textSize="24sp"
+        android:text="Zizo" />
+
+    <TextView
+        android:id="@+id/Kimo_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    	android:background="#4CAF50"                
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:textSize="24sp"
+        android:text="Kimo" />
+
+</RelativeLayout>

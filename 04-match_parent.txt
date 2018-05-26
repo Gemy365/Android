@@ -1,0 +1,25 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"			#match_parent >> Get The Same width & height For All Views 
+    android:layout_height="match_parent"
+    android:background="#03A9F4">
+    
+<TextView
+    android:text="I'm"
+    android:textSize = "30sp"
+	android:textStyle="italic"
+    android:textColor="#000000"
+    android:background="#E91E63"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    
+<TextView
+    android:text="Gemy!"
+    android:textSize = "30sp"
+	android:textStyle="italic"
+    android:textColor="#000000"
+    android:background="#00E676"
+    android:layout_width="match_parent"			
+    android:layout_height="wrap_content"/>    
+
+</LinearLayout>

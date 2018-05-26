@@ -1,0 +1,32 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0"
+    android:background="#03A9F4">
+    
+<TextView
+    android:text="I'm"
+    android:textSize = "30sp"
+    android:textStyle="italic"
+    android:textColor="#000000"
+    android:background="#E91E63"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"		#Make It In The Right
+    android:layout_alignParentTop="true"    		#Make It In The Top
+    android:layout_weight="0"/>
+    
+<TextView
+    android:text="Gemy!"
+    android:textSize = "30sp"
+    android:textStyle="italic"
+    android:textColor="#000000"
+    android:background="#00E676"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentBottom="true"      
+    android:layout_weight="0"/>    
+
+</LinearLayout>

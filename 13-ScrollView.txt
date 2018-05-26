@@ -1,0 +1,12 @@
+<ScrollView								#Allow You To Scroll Up & Down In Your Project 
+    xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+	<LinearLayout
+   	 android:orientation="vertical"					#For X,Y [vertical or horizontal]
+   	 android:layout_width="wrap_content"
+   	 android:layout_height="wrap_content">
+	</LinearLayout>
+
+</ScrollView>

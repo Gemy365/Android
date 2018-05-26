@@ -1,0 +1,5 @@
+<EditText						#To Make Name Field To Allow The User To Type AnyThing
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Type Your Name!"				#Words On NameField Before Type AnyThing
+android:inputType="textMultiLine" />			#What Need From User To Write

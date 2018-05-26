@@ -1,0 +1,13 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"		#This Line Allow You To Type [andriod:]
+    android:orientation="vertical"					#For X,Y [vertical or horizontal]
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+	
+	<LinearLayout							#Nested To Make Horizontal In Vertical
+    	android:orientation="horizontal"				#For X,Y [vertical or horizontal]
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content">
+	</LinearLayout>
+
+</LinearLayout>

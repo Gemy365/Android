@@ -1,0 +1,21 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"		#This Line equals [andriod:]
+    android:orientation="vertical"					#For X,Y [vertical or horizontal]
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+<ImageView
+    android:src="@drawable/rocks"
+    android:layout_width="1000dp"
+    android:layout_height="605dp"
+    android:scaleType="centerCrop"/>
+    
+<TextView
+    android:text="Love You, Gemy!"
+    android:textSize = "30sp"
+    android:textStyle="italic"
+    android:textColor="#4689C8"
+    android:background="@android:color/black"
+    android:layout_width="360dp"
+    android:layout_height="wrap_content"/>
+</LinearLayout>						#Collect More Views Together

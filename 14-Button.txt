@@ -1,0 +1,19 @@
+<Button							#Make Button To Do Action
+	android:id="@+id/Order"
+	android:layout_width="150dp"
+	android:layout_height="50dp"
+	android:onClick="submitOrder"			#Make Method In Java To Make Action By This Button
+	android:text="ORDER"
+	android:textColor="#DD2C00"
+	android:textSize="20sp"
+	android:textStyle="bold" />
+
+
+Hint:
+In Java The Method Will Be Like This
+
+public void submitOrder (View v)			#submitOrder The Same Name Like android:onClick="submitOrder"
+{
+ 	#Do AnyThing
+
+}
