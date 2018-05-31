@@ -1,0 +1,23 @@
+// Hint: To Make New Activity By It's Own Xml >>  Right Click On Java Folder>> New >> Activity >> Empty Activity >> [Called: NumberActivity]
+
+// Use [Intent] To Connect Activities Together
+
+// In Main XML
+
+<TextView
+	android:id="@+id/numbers"
+	style="@style/CategoryStyle"							// Get Style From [style's Name CategoryStyle] Have Collection of Attributes
+	android:background="@color/category_numbers"					// Get Color From [color's Name category_numbers]
+	android:text="@string/category_numbers"/>					// Get text From [string's Name category_numbers]
+
+// In Main Java
+
+TextView numbers = (TextView) findViewById(R.id.numbers);				// Get TextView By ID
+
+numbers.setOnClickListener(new View.OnClickListener() {					// Use OnClickListener [hint: When type (new View.OnClickListener() >> all the following Code will Write Automatically]
+@Override
+public void onClick(View view) {
+	Intent numbersIntent = new Intent(MainActivity.this,NumbersActivity.class);	// Intent >> In This Case Using to go to from this Activity [MainActivity.this] to another Activity you want to go to [NumbersActivity.class]
+	startActivity(numbersIntent);
+}
+});

@@ -1,0 +1,35 @@
+// In XML
+
+<TextView
+        android:id="@+id/numbers"
+        style="@style/CollectionOfStyle"						// Get Style By It's Name
+        android:background="@color/category_numbers"
+        android:text="@string/category_numbers"/>
+
+<Button											
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Test"
+        android:textColor="#000" 
+	style="@style/AppTheme"/>							// Get Main Style [AppTheme]
+
+#In Style
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light">				// Main Style
+        <item name="colorPrimary">#FF9800</item>					// colorPrimary >> background color of app bar [Must be in main Style]
+
+        <item name="colorButtonNormal">#FF9800</item>					// colorButtonNormal >> Background color of all buttons in the app [Must be in main Style]
+    </style>
+
+<style name="CollectionOfStyle">							// Make Name For Style All Views Will Get This Attributes
+        
+	<item name="android:layout_width">match_parent</item>			
+        <item name="android:layout_height">@dimen/list_item_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+	<item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:fontFamily">cursive</item>					// Can Choose [cursive or casual] or any other type
+
+</style>

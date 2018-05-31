@@ -1,0 +1,47 @@
+// Hint Add Alot Of ViewText Without Create it In File.xml
+
+// In Xml
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"							// MakeSure To Make [id] For LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tan_background"
+    android:orientation="vertical"
+    tools:context="com.example.android.miwok.MainActivity">
+
+</LinearLayout>
+
+
+// In Java
+
+    	// Create a Arraylist of words
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("one");
+        words.add("two");
+        words.add("three");
+
+        // Find the root view so we can add child views to it in File.xml
+        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootView);
+
+        // ForLoop To Add All Of words ArrayList
+        for (int index = 0; index < words.size(); index++) {
+            // Create a new TextView all the time [Use [this] or JavaFile.this]
+            TextView wordView = new TextView(this);
+
+            // Set the text to be word at the current index
+            wordView.setText(words.get(index));
+           
+	    // Set the Color of text to be word at the current index
+            wordView.setTextColor(Color.parseColor("#FD8E09"));
+            
+	    // Set the Size of text to be word at the current index
+            wordView.setTextSize(26);
+
+            // Add this TextView as another child to the root view of this layout
+            rootView.addView(wordView);
+        }

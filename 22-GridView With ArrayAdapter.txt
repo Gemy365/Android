@@ -1,0 +1,68 @@
+// Hint: GridView Used To Display Info if it More Than Like [1000 Names] it's Save Space Of Memory Than LinearLayOut 
+
+// In XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid"							// Get It By It's ID 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnWidth="90dp"							// Width Of Each Colomn				
+    android:numColumns="auto_fit"						// Number Of Colomns On Screen [auto_fit >> Best Number Of Colomns For Each Screen]
+    android:verticalSpacing="10dp"						// Space Between Each Element in The Same Colomn
+    android:horizontalSpacing="10dp"						// Space Between Each Element in The Same Row
+    tools:context="com.example.android.miwok.NumbersActivity"/>
+
+// In Java
+
+        // Create a Arraylist of words
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("one");
+        words.add("two");
+        words.add("three");
+        words.add("four");
+        words.add("five");
+        words.add("six");
+        words.add("seven");
+        words.add("eight");
+        words.add("nine");
+        words.add("ten");
+
+        words.add("one");
+        words.add("two");
+        words.add("three");
+        words.add("four");
+        words.add("five");
+        words.add("six");
+        words.add("seven");
+        words.add("eight");
+        words.add("nine");
+        words.add("ten");
+
+        words.add("one");
+        words.add("two");
+        words.add("three");
+        words.add("four");
+        words.add("five");
+        words.add("six");
+        words.add("seven");
+        words.add("eight");
+        words.add("nine");
+        words.add("ten");
+
+        // Take [3 Parameters]
+	// 1- [This == (File.JaVa).this] 
+	// 2- [android.R.layout.simple_list_item_1] >> Get layout called [simple_list_item_1] Supported By Android
+        // 3- [Your Data List]
+	ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, words);
+
+        // From File.XML Get GridView By Id   [id >> grid]
+       GridView gridView = (GridView) findViewById(R.id.grid);
+
+        // Use [setAdapter] Take 1 Parameter Take Val Of ArrayAdapter [itemsAdapter]
+        gridView.setAdapter(itemsAdapter);
+    }
+}
+

@@ -1,0 +1,17 @@
+// In Java
+
+ArrayList<String> words = new ArrayList<String>();		// Type Of This Array is String
+       
+words.add("one");						// add >> To Add New Element [Has index 0]
+words.add("two");						// add >> To Add New Element [Has index 1]
+words.add("three");						// add >> To Add New Element [Has index 2]
+
+        
+words.get(0);							// get >> To Access On Element of index [0]
+
+words.remove(0);						// remove >> To Remove Element of index [0]
+
+words.size();							// size >> To Know The Length Of Array's Elements
+
+
+// Hint: [ArrayList] Better Than Normal [Array] BeCause:		Don't Have Limit Size [Can Add Alot Of Elements]

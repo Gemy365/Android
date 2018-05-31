@@ -1,0 +1,12 @@
+// Hint: Spinner is Drop Menu View
+
+// IN XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/spinner"								// Get It By It's ID
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.android.miwok.NumbersActivity"/>

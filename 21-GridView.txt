@@ -1,0 +1,16 @@
+// Hint: GridView Used To Display Info if it More Than Like [1000 Names] it's Save Space Of Memory Than LinearLayOut 
+
+// In XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grid"							// Get It By It's ID 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnWidth="90dp"							// Width Of Each Colomn				
+    android:numColumns="auto_fit"						// Number Of Colomns On Screen [auto_fit >> Best Number Of Colomns For Each Screen]
+    android:verticalSpacing="10dp"						// Space Between Each Element in The Same Colomn
+    android:horizontalSpacing="10dp"						// Space Between Each Element in The Same Row
+    tools:context="com.example.android.miwok.NumbersActivity"/>
