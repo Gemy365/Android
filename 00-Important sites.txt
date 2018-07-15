@@ -13,43 +13,46 @@ https://www.youtube.com/watch?v=IMG65dyg6_U
 5-control Airplane mode:
 https://www.youtube.com/watch?v=ydVxejWYcE8
 
-6-Coundown Timer app:
-https://www.youtube.com/watch?v=-Qr3wFvlQRQ
+6-Countdown Timer ENTER A TIME:
+https://www.youtube.com/watch?v=7dQJAkjNEjM
 
 7-Stopwatch with Start, Pause, Reset:
 https://www.youtube.com/watch?v=RLnb4vVkftc
 
-8-Android Slide-Onboarding Screen Design:
+8-Coundown Timer app:
+https://www.youtube.com/watch?v=-Qr3wFvlQRQ
+
+9-Android Slide-Onboarding Screen Design:
 https://www.youtube.com/watch?v=byLKoPgB7yA
 
-9-Splash Screen App:
+10-Splash Screen App:
 https://www.youtube.com/watch?v=w4FDTAHRaUY
 
-10-Fragments:
+11-Fragments:
 https://www.youtube.com/watch?v=7mX5LPbO6ik
 
-11-Android Development Patterns:
+12-Android Development Patterns:
 https://www.youtube.com/playlist?list=PLWz5rJ2EKKc-lJo_RGGXL2Psr8vVCTWjM
 
-12-Create database and tables:
+13-Create database and tables:
 https://www.youtube.com/watch?v=LZ8kJg4Pg4Y&list=PLshdtb5UWjSrEUEKlfHwqQtYu2HxtCwu_
 
-13-Welcome screen with upToDown Animations:
+14-Welcome screen with upToDown Animations:
 https://www.youtube.com/watch?v=pznCs--BtJA&list=RDQMGmxLo6oRkLI&index=1
 
-14-Floating Action Button with Animations:
+15-Floating Action Button with Animations:
 https://www.youtube.com/watch?v=orcpzMo7igQ
 
-15-Floating Action MENU Animations:
+16-Floating Action MENU Animations:
 https://www.youtube.com/watch?v=k_MC4zPKZTY
 
-16-Floating action button with Social Icons:
+17-Floating action button with Social Icons:
 https://www.youtube.com/watch?v=iqtfbEU0SUY
 
-17-floating action button animations:
+18-floating action button animations:
 https://www.youtube.com/watch?v=46gQrf2M5pU
 
-18-Drink Shop part 1: >> V.Important
+19-Drink Shop part 1: >> V.Important
 https://www.youtube.com/watch?v=NRqb_AscCyA&list=PLaoF-xhnnrRW_FGeacuT1VLqnRMKfpp4v&index=1
 
 
