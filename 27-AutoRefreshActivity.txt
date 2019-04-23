@@ -1,0 +1,20 @@
+// Global Var Of Handler.
+Handler mHandler;
+
+// Call Runnable Method To Start Auto Refresh.
+                mHandler = new Handler();
+                mHandler.postDelayed(m_Runnable,5000);
+
+    // Auto Refresh Activity Method.
+    private final Runnable m_Runnable = new Runnable()
+    {
+        public void run()
+
+        {
+
+            Toast.makeText(MainActivity.this,"Auto Refresh Activity Every 5sec",Toast.LENGTH_SHORT).show();
+
+            mHandler.postDelayed(m_Runnable, 5000);
+        }
+
+    };//end runnable

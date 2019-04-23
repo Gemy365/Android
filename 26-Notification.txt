@@ -1,0 +1,37 @@
+                // Init The Notification By NotificationManager.
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                // Create Sound For Notification.
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                // When Press On Notification.. Go To This Activity.
+                Intent intent = new Intent(MainActivity.this, DoctorSignIn.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 1, intent, 0);
+
+                // Init Builder For Notofication.
+                Notification.Builder builder = new Notification.Builder(MainActivity.this);
+
+                // DisAppear Notification When Press On It.
+                builder.setAutoCancel(true);
+                // Appear This Text When You Have New Notification.
+                builder.setTicker("this is ticker text");
+                // Title Of Notification.
+                builder.setContentTitle("WhatsApp Notification");
+                // SubText Of Notification.
+                builder.setSubText("This is subtext...");   //API level 16
+                // Text Of Notification.
+                builder.setContentText("You have a new message").setSound(alarmSound);
+                // Type Number Of Notification.
+                builder.setNumber(100);
+                // Icon Of Notification.
+                builder.setSmallIcon(R.drawable.patient_icon);
+                // Active GoingTo New Activity When Pressing.
+                builder.setContentIntent(pendingIntent);
+                // Make Alert When You Need To DisAppear The Notification By Your Finger.
+                builder.setOngoing(true);
+                // {1000, 1000} Set Long Vibrate, But {500, 500} Set Short Vibrate.
+                builder.setVibrate(new long[]{1000, 1000});
+                // Build Your Notification.
+                builder.build();
+                // Active Notification.
+                manager.notify(11, builder.getNotification());
