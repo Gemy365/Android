@@ -24,8 +24,9 @@
     // Global Var Of Handler.
     Handler mHandler;
 
-    // Call Runnable Method To Start Auto Refresh.
+    // Make Constructor From Handler.
     mHandler = new Handler();
+
     // Init Call Runnable Method After 2sec.
     mHandler.postDelayed(m_Runnable,2000);
 
