@@ -1,0 +1,354 @@
+// strings.xml
+
+    <array name="myNames">
+        <item>Mohamed</item>
+        <item>Gemy</item>
+        <item>Mamo</item>
+        <item>Memo</item>
+    </array>
+-----------------------------------------------------------------------------------------------------------------
+// activity_sign_up.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SignUp">
+
+    <EditText
+        android:id="@+id/edit_text_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your User Name"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/edit_text_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Email"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/edit_text_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Phone"
+        android:inputType="number"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <Spinner
+        android:id="@+id/nick_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:entries="@array/myNames"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Register" />
+
+    <ListView
+        android:id="@+id/retrieve_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
+-------------------------------------------------------------------------------------------------------------------------------------------------
+// SignUp.java
+
+package com.example.android.firebaselearn;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.android.firebaselearn.Model.SignUpUsers;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class SignUp extends AppCompatActivity {
+
+    // Initialize Firebase Database.
+    FirebaseDatabase firebaseDatabase;
+    // Initialize Firebase Reference [Root].
+    DatabaseReference reference;
+
+    // EditViews.
+    EditText UsreNameEdit, PasswordEdit, EmailEdit, PhoneEdit;
+
+    // Spinner.
+    Spinner NickNameSpnr;
+
+    // Btn
+    Button Register;
+
+    // ListView To Get Data From Firebase Database.
+    ListView RetrieveData;
+
+    // ArrayList & ArrayAdapter For ListView.
+    ArrayList<String> RetrieveList;
+    ArrayAdapter<String> RetrieveAdapter;
+
+    // Object Of SignUpUsers Class.
+    SignUpUsers signUpUsers;
+
+    // Counter For Number Of Users.
+    int counter = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_up);
+
+        // Start With Instance From Firebase Database Object.
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // Create OrgData As New Root Name.
+        reference = firebaseDatabase.getReference("Users");
+
+        // Get Views By IDs.
+        UsreNameEdit = (EditText) findViewById(R.id.edit_text_username);
+        PasswordEdit = (EditText) findViewById(R.id.edit_text_password);
+        EmailEdit = (EditText) findViewById(R.id.edit_text_email);
+        PhoneEdit = (EditText) findViewById(R.id.edit_text_phone);
+
+        NickNameSpnr = (Spinner) findViewById(R.id.nick_name);
+
+        Register = (Button) findViewById(R.id.btn_register);
+
+        RetrieveData = (ListView) findViewById(R.id.retrieve_data);
+        RetrieveList = new ArrayList<>();
+        RetrieveAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, RetrieveList);
+
+        // Initial setAdapter.
+        RetrieveData.setAdapter(RetrieveAdapter);
+
+        // SignUpUsers Class.
+        signUpUsers = new SignUpUsers();
+
+        // When Click On Register Button.
+        Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call getData() Method.
+                getData();
+
+                // Check If Data Not Null Before Store It Into Firebase.
+                if (signUpUsers.getUserName() != null && !TextUtils.isEmpty(signUpUsers.getUserName())) {
+                    // addListenerForSingleValueEvent Called [Once] When Make Change On Single Value.
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            // If User Exists.. Increase Counter By 1 And Check Again.
+                            while (dataSnapshot.child("User" + counter).exists()) {
+                                // Increase 1.
+                                counter++;
+                            }
+                            // Store All Data Into [New User Path.] Into Firebase.
+                            reference.child("User" + counter).setValue(signUpUsers);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    // Method To Retrieve Data.
+                    RetrieveDataMethod();
+
+                    // Goto MainActivity.
+//                    Intent intent = new Intent(SignUp.this, MainActivity.class);
+//                    startActivity(intent);
+                }
+            }
+        });
+
+
+    }
+
+    // Call RetrieveData Method To Retrieve Data From Database Firebase.
+    private void RetrieveDataMethod() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear ArrayList To Prevent Repeating Items When Listen To Change In Database [As Refresh ArrayList]
+                RetrieveList.clear();
+                // Enhanced For Loop.
+                // dataSnapshot.getChildren() >> Get Values Of All Children Into "Users" In Database.
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    // ds.getValue(SignUpUsers.class) >> Get All Value Of Child Has Change From Database
+                    // And Put It Into SignUpUsers Class.
+                    SignUpUsers signUpUsers = ds.getValue(SignUpUsers.class);
+
+                    // Add UserName & Phone Into Array List.
+                    RetrieveList.add(signUpUsers.getUserName() + " " + signUpUsers.getPhone());
+
+                    // Make Adapter Know About Any Changes.
+                    RetrieveAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    // getData() Method.
+    private void getData() {
+        // Get All Input's User Data.
+        String UserName = UsreNameEdit.getText().toString();
+        String Password = PasswordEdit.getText().toString();
+        String Email = EmailEdit.getText().toString();
+        String Phone = PhoneEdit.getText().toString();
+        String NickName = NickNameSpnr.getSelectedItem().toString();
+
+        //
+        if (!TextUtils.isEmpty(UserName) && !TextUtils.isEmpty(Password) && !TextUtils.isEmpty(Email)
+                && !TextUtils.isEmpty(Phone)) {
+
+            // Set Data Into Set Methods Into SignUpUsers Class.
+            signUpUsers.setUserName(UserName);
+            signUpUsers.setPassword(Password);
+            signUpUsers.setEmail(Email);
+            signUpUsers.setPhone(Phone);
+            signUpUsers.setNickName(NickName);
+
+        } else
+            Toast.makeText(this, "Fill All Fields..!!", Toast.LENGTH_SHORT).show();
+    }
+}
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+// SignUpUsers.class
+
+package com.example.android.firebaselearn.Model;
+
+// Keys For Firebase Database.
+public class SignUpUsers {
+    private String UserName;
+    private String Password;
+    private String Email;
+    private String Phone;
+    private String NickName;
+
+    public SignUpUsers() {
+    }
+
+    public SignUpUsers(String userName, String password, String email, String phone, String nickName) {
+        UserName = userName;
+        Password = password;
+        Email = email;
+        Phone = phone;
+        NickName = nickName;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public String getNickName() {
+        return NickName;
+    }
+
+    public void setNickName(String nickName) {
+        NickName = nickName;
+    }
+}
+
+
+    public void setNickName(String nickName) {
+        NickName = nickName;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
