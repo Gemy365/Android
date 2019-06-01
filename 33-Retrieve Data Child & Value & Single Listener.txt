@@ -1,0 +1,117 @@
+// Retrieve Data By addValueEventListener & addChildEventListener & addListenerForSingleValueEvent.
+
+    // RetrieveData By addValueEventListener To Retrieve Data From Database Firebase.
+    private void RetrieveDataMethod() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear ArrayList To Prevent Repeating Items When Listen To Change In Database [As Refresh ArrayList]
+                RetrieveList.clear();
+                // Enhanced For Loop.
+                // dataSnapshot.getChildren() >> Get Values Of All Children Into "Users" In Database.
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    // ds.getValue(SignUpUsers.class) >> Get All Value Of Child Has Change From Database
+                    // And Put It Into SignUpUsers Class.
+                    SignUpUsers signUpUsers = ds.getValue(SignUpUsers.class);
+
+                    // Add UserName & Phone Into Array List.
+                    RetrieveList.add(signUpUsers.getUserName() + " " + signUpUsers.getPhone());
+
+                    // Make Adapter Know About Any Changes.
+                    RetrieveAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+}
+-----------------------------------------------------------------------------------------------------------------
+    // RetrieveData By addChildEventListener To Retrieve Data From Database Firebase.
+    private void RetrieveDataMethod() {
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // dataSnapshot.getValue(SignUpUsers.class) >> Get All Value Of Single Child
+                // And Put It Into SignUpUsers Class.
+                SignUpUsers user = dataSnapshot.getValue(SignUpUsers.class);
+
+                RetrieveList.add(user.getUserName() + " " + user.getPassword());
+
+                RetrieveAdapter.notifyDataSetChanged();
+
+                Toast.makeText(SignUp.this, "Added", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+-----------------------------------------------------------------------------------------------------------------
+    // RetrieveData By addListenerForSingleValueEvent To Retrieve Data From Database Firebase.
+    private void RetrieveDataMethod() {
+        // Get Data Of Single User [User4].
+        reference.child("User4").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear ArrayList To Prevent Repeating Items When Listen To Change In Database [As Refresh ArrayList]
+                RetrieveList.clear();
+
+                // dataSnapshot.getValue(SignUpUsers.class) >> Get All Value Of Single Child
+                // And Put It Into SignUpUsers Class.
+                SignUpUsers user = dataSnapshot.getValue(SignUpUsers.class);
+
+                RetrieveList.add(user.getUserName() + " " + user.getPassword());
+
+                RetrieveAdapter.notifyDataSetChanged();
+
+                Toast.makeText(SignUp.this, "Added", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
