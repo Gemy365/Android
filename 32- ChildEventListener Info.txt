@@ -1,0 +1,23 @@
+the ChildEventListener class Firebase Database.
+
+onChildAdded() gives a list of item every time a new item is added. It provides you with a DataSnapshot object through which you can retrieve your needed data.
+
+onChuldChanegd() listends for any modifications in the child. It also provides you with a DataSnapshot object which contains the updated data.
+
+onChildRemoved() listens for when an item has been removed from the child. DataSnapshot contains the data for the removed child.
+
+onChildMoved() listens for changes in the order of the item in the child.
+
+orderByChild() – orders by the value of the specified child key
+
+orderByKey() – order by the key of the child
+
+orderByValue() – orders by child values
+
+limitToFirst() – sets the maximum amount of data returned looking from the beginning forward.
+
+startAt() – return items greater than or equal to the specified key or value depending on the order-by method chosen.
+
+limitToLast() – similar to the limitToFirst() method, it returns the maximum amount of data looking from the end backwards.
+
+endAt() – returns items less than or equal to the specified key.
