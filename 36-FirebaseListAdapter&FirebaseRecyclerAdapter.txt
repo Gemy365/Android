@@ -1,0 +1,606 @@
+// FirebaseRecyclerAdapter Using Recyclerview.
+---------------------------------------------
+// Gradle
+
+    // FirebaseUI for Firebase Realtime Database To Use FirebaseListAdapter<> & FirebaseRecyclerAdapter<>.
+    implementation 'com.firebaseui:firebase-ui-database:5.0.0'
+    // recyclerview Enhanced Listview.
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    // Allowable Click Item Of Recyclerview.
+    implementation 'com.chootdev:recycleclick:1.0.0'
+-----------------------------------------------------------------------------------------------------------------
+// textviews_retrieve_data.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<!--    android:descendantFocusability="blocksDescendants"
+If Item Of Recyclerview Not Allow Clicking-->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardElevation="10dp"
+    android:layout_margin="4dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/retrieve_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your User Name"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Email"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Phone"
+        android:inputType="number"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
+-----------------------------------------------------------------------------------------------------------------
+// activity_retrieve_data.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RetrieveData">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/retrieve_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#000"
+        android:dividerHeight="10dp" />
+
+</LinearLayout>
+
+-----------------------------------------------------------------------------------------------------------------
+// RetrieveData.java
+
+package com.example.android.firebaselearn;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.chootdev.recycleclick.RecycleClick;
+import com.example.android.firebaselearn.Model.SignUpUsers;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
+public class RetrieveData extends AppCompatActivity {
+
+    // RecyclerView To Get Data From Firebase Database.
+    RecyclerView RetrieveDataRv;
+
+    // ArrayList Of Adapter Class [SignUpUsers] Setter & Getter Methods.
+    // Store All Data To Use Them Positions Into ItemClickListener Method.
+    ArrayList<SignUpUsers> list;
+
+    // FirebaseRecyclerOptions<ClassOfGetter&Setter> [From Lib Firebase UI].
+    FirebaseRecyclerOptions<SignUpUsers> options;
+
+    // FirebaseRecyclerAdapter is New Feature As ArrayList & ArrayAdapter. [From Lib Firebase UI].
+    FirebaseRecyclerAdapter<SignUpUsers, UserViewHolder> adapter;
+
+    // Initialize Firebase Database.
+    FirebaseDatabase database;
+    // Initialize Firebase Reference [Root].
+    DatabaseReference reference;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_retrieve_data);
+
+        // Store All Data To Use Them Positions Into ItemClickListener Method.
+        list = new ArrayList<SignUpUsers>();
+
+        // Start With Instance From Firebase Database Object.
+        database = FirebaseDatabase.getInstance();
+
+        // Create Users As New Root Name.
+        reference = database.getReference("Users");
+
+        // Optional:  Make Action Bar [Upper Bar Has Title].
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("RecyclerView");
+
+        // Get Views By IDs.
+        RetrieveDataRv = (RecyclerView) findViewById(R.id.retrieve_data);
+
+        // Fixed Size Between Items Of RV.
+        RetrieveDataRv.setHasFixedSize(true);
+
+        // Manage The Items Of RV.
+        RetrieveDataRv.setLayoutManager(new LinearLayoutManager(this));
+
+        // FirebaseRecyclerOptions<ClassOfGetter&Setter> [From Lib Firebase UI].
+        options = new FirebaseRecyclerOptions.Builder<SignUpUsers>()
+                .setQuery(reference, SignUpUsers.class).build();
+
+        // FirebaseRecyclerAdapter is New Feature As ArrayList & ArrayAdapter. [From Lib Firebase UI].
+        adapter = new FirebaseRecyclerAdapter<SignUpUsers, UserViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull SignUpUsers model) {
+                // holder var of Own UserViewHolder has userName TextView & Other TextViews.
+                // model var of  Own SignUpUsers Adapter Class has [Getter & Setter Methods].
+                holder.userName.setText(model.getUserName());
+                holder.password.setText(model.getPassword());
+                holder.email.setText(model.getEmail());
+                holder.phone.setText(model.getPhone());
+
+                // Store All Data Into ArrayList To Use Them Positions Into ItemClickListener Method.
+                // Check This Line >> list.get(i);
+                list.add(model);
+
+            }
+
+            @NonNull
+            @Override
+            
+            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                // Always RecyclerViews To Make New One.
+                View view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.textviews_retrieve_data, viewGroup, false);
+                
+                // Return New Constructor Has view Param.
+                return new UserViewHolder(view);
+            }
+        };
+
+        // Make RecycleView As GridView Has 2 Columns.
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getBaseContext(), 2);
+        RetrieveDataRv.setLayoutManager(gridLayoutManager);
+
+        // Set Adapter Of RecycleView.
+        RetrieveDataRv.setAdapter(adapter);
+
+        /**   Gradle Lib Allowable Click Item Of Recyclerview.
+         *     implementation 'com.chootdev:recycleclick:1.0.0'
+         *     RecycleClick.addTo(YOUR_RECYCLEVIEW).setOnItemClickListener()
+         */
+        RecycleClick.addTo(RetrieveDataRv).setOnItemClickListener(new RecycleClick.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int i, View v) {
+                // Get Item By Position And Cast It Into Adapter Class [SignUpUsers Getter & Setter].
+                // Get list [ArrayList] by Position.
+                SignUpUsers user = (SignUpUsers) list.get(i);
+                // GoTo UpdateDeleteData Activity.
+                Intent intent = new Intent(RetrieveData.this, UpdateDeleteData.class);
+                // Take Some Of Value To The UpdateDeleteData Activity To Use Them There.
+                intent.putExtra("userName", user.getUserName());
+                intent.putExtra("password", user.getPassword());
+                intent.putExtra("email", user.getEmail());
+                intent.putExtra("phone", user.getPhone());
+                // The Key As The Same No. Phone.
+                intent.putExtra("key", user.getPhone());
+                // Start Intent.
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    // When Start This Activity.
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Clear List As A Refresh It All The Time Start this Activity.
+        list.clear();
+        // Start Adapter Listening.
+        adapter.startListening();
+    }
+
+    // When Stop This Activity.
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Stop Adapter Listening.
+        adapter.stopListening();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+// UserViewHolder.java
+
+package com.example.android.firebaselearn;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.android.firebaselearn.Model.SignUpUsers;
+
+import java.util.ArrayList;
+
+public class UserViewHolder extends RecyclerView.ViewHolder {
+
+    // Init Textviews.
+    TextView userName, password, email, phone;
+
+    // Constructor.
+    public UserViewHolder(@NonNull View itemView) {
+        super(itemView);
+
+        // itemView var Access [R.layout.textviews_retrieve_data].
+        // Views By ID.
+        userName = (TextView) itemView.findViewById(R.id.retrieve_username);
+        password = (TextView) itemView.findViewById(R.id.retrieve_password);
+        email = (TextView) itemView.findViewById(R.id.retrieve_email);
+        phone = (TextView) itemView.findViewById(R.id.retrieve_phone);
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+// SignUpUsers.java
+
+package com.example.android.firebaselearn.Model;
+
+// Keys For Firebase Database.
+public class SignUpUsers {
+    private String userName;
+    private String password;
+    private String email;
+    private String phone;
+
+    public SignUpUsers() {
+    }
+
+    public SignUpUsers(String userName, String password, String email, String phone) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+}
+ 
+-----------------------------------------------------------------------------------------------------------------
+// FirebaseListAdapter Using Listview.
+-------------------------------------
+// activity_retrieve_data.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RetrieveData">
+
+    <ListView
+        android:id="@+id/retrieve_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#000"
+        android:dividerHeight="10dp"
+        android:minHeight="450dp" />
+
+</LinearLayout>
+
+-----------------------------------------------------------------------------------------------------------------
+// textviews_retrieve_data.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<!--    android:descendantFocusability="blocksDescendants"
+If Item Of Listview Not Allow Clicking-->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardElevation="10dp"
+    android:layout_margin="4dp"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/retrieve_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your User Name"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Email"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/retrieve_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter Your Phone"
+        android:inputType="number"
+        android:padding="16dp"
+        android:singleLine="true"
+        android:text="" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+-----------------------------------------------------------------------------------------------------------------
+// RetrieveData.java
+
+package com.example.android.firebaselearn;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.android.firebaselearn.Model.SignUpUsers;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+
+public class RetrieveData extends AppCompatActivity {
+
+    // ListView To Get Data From Firebase Database.
+    ListView RetrieveDataLv;
+
+    // FirebaseListAdapter is New Feature As ArrayList & ArrayAdapter. [From Lib Firebase UI].
+    FirebaseListAdapter adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_retrieve_data);
+
+        // Get Views By IDs.
+        RetrieveDataLv = (ListView) findViewById(R.id.retrieve_data);
+
+        // Query To Determine Which Path U Need To Get Data From.
+        Query query = FirebaseDatabase.getInstance().getReference("Users");
+
+        // FirebaseListOptions<ClassOfGetter&Setter> [From Lib Firebase UI].
+        FirebaseListOptions<SignUpUsers> options = new FirebaseListOptions.Builder<SignUpUsers>()
+                // Layout To Handle Retrieving Data Into It.
+                .setLayout(R.layout.textviews_retrieve_data)
+                // Get Data From Database & Adapt It Into [ClassOfGetter&Setter].class.
+                .setQuery(query, SignUpUsers.class)
+                // Call Start & Stop Override Methods.
+                .setLifecycleOwner(RetrieveData.this)
+                // Build It.
+                .build();
+
+        
+        // Make Adapter.
+        adapter = new FirebaseListAdapter(options) {
+            @Override
+            protected void populateView(@NonNull View v, @NonNull Object model, int position) {
+                // Cast model Object To [ClassOfGetter&Setter].
+                SignUpUsers user = (SignUpUsers) model;
+                // v Of View Means Find IDs From [.setLayout(R.layout.textviews_retrieve_data)] In FirebaseListOptions
+                TextView userName = v.findViewById(R.id.retrieve_username);
+                TextView password = v.findViewById(R.id.retrieve_password);
+                TextView email = v.findViewById(R.id.retrieve_email);
+                TextView phone = v.findViewById(R.id.retrieve_phone);
+//                ImageView image = v.findViewById(R.id.retrieve_image);
+
+                // Set TextViews By Getting Data From Firebase Database.
+                userName.setText(user.getUserName());
+                password.setText(user.getPassword());
+                email.setText(user.getEmail());
+                phone.setText(user.getPhone());
+                // Picasso To Get Image From Firebase Database.
+//                Picasso.with(RetrieveDataLv.this).load(user.getImage()).into(image);
+            }
+        };
+        // Active Adapter For ListView.
+        RetrieveDataLv.setAdapter(adapter);
+
+        // When Click On Items ListView.
+        RetrieveDataLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Get Item By Position And Cast It Into Adapter Class [SignUpUsers Getter & Setter].
+                SignUpUsers user = (SignUpUsers) RetrieveDataLv.getItemAtPosition(i);
+                // GoTo UpdateDeleteData Activity.
+                Intent intent = new Intent(RetrieveData.this, UpdateDeleteData.class);
+                // Take Some Of Value To The UpdateDeleteData Activity To Use Them There.
+                intent.putExtra("userName", user.getUserName());
+                intent.putExtra("password", user.getPassword());
+                intent.putExtra("email", user.getEmail());
+                intent.putExtra("phone", user.getPhone());
+                // The Key As The Same No. Phone.
+                intent.putExtra("key", user.getPhone());
+                // Start Intent.
+                startActivity(intent);
+            }
+        });
+    }
+
+    // When Start This Activity.
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Start Adapter Listening.
+        adapter.startListening();
+    }
+
+    // When Stop This Activity.
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Stop Adapter Listening.
+        adapter.stopListening();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+// SignUpUsers.java
+
+package com.example.android.firebaselearn.Model;
+
+// Keys For Firebase Database.
+public class SignUpUsers {
+    private String userName;
+    private String password;
+    private String email;
+    private String phone;
+
+    public SignUpUsers() {
+    }
+
+    public SignUpUsers(String userName, String password, String email, String phone) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+
+
